@@ -4,8 +4,11 @@ import { teamFilter } from '../../selectors/team-selector';
 export default class TopPointsController {
   constructor($ngRedux) {
     this.statsData = [];
-
-    $ngRedux.connect(teamFilter, stats => this.statsData = this.getTopPoints(15)(stats.toJS()));
+    var count = 0;
+    $ngRedux.connect(teamFilter, stats => {
+      console.log('count update',++count);
+      this.statsData = this.getTopPoints(15)(stats.toJS())
+    });
   }
 
   getTopPoints(count) {
