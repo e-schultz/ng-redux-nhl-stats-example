@@ -1,6 +1,5 @@
 <div
-  class="global-debug text-right"
-  ng-class="{'expanded': debug.showDebugger}"
+  class="global-debug"
   ng-init="debug.showDebugger = false;">
 
   <button
@@ -9,7 +8,7 @@
     Toggle Filter Debug
   </button>
   <pre
-    class="global-debugger text-left"
+    class="global-debugger"
     ng-class="{'visible': debug.showDebugger}">
     {{ debug.globalState | json }}
   </pre>

@@ -1,11 +1,14 @@
 export default class GlobalDebugController {
-  constructor($scope, $ngRedux) {
-    $ngRedux.connect($scope, state => {
-      return {
-        globalState: state
-      };
+  constructor($ngRedux, $scope) {
+
+    let _onChange = (state) => ({
+      globalState: state
     });
+    
+    const disconnect = $ngRedux.connect(_onChange)(this);
+
+    $scope.$on('$destroy', () => disconnect());
   }
 }
 
-GlobalDebugController.$inject = ['$scope', '$ngRedux'];
+GlobalDebugController.$inject = ['$ngRedux', '$scope'];

@@ -1,14 +1,13 @@
 <div>
-  <a
-    ui-sref="app({season: 'playoff'})"
-    ui-sref-active="active"
+  <h1>Select Data Source</h1>
+  <button
+    ng-click="dataSource.fetchPlayoff()"
     class="btn btn-default">
     Playoffs
-  </a>
-  <a
-    ui-sref="app({season: 'regular'})"
-    ui-sref-active="active"
+  </button>
+  <button
+    ng-click="dataSource.fetchRegularSeason()"
     class="btn btn-default">
     Regular Season
-  </a>
+  </button>
 </div>

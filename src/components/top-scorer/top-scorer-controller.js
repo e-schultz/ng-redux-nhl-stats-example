@@ -1,16 +1,26 @@
 import R from 'ramda';
-import { teamFilter, topScorerSelector } from '../../selectors';
+import { teamFilter } from '../../selectors/team-selector';
 
 export default class TopScorerController {
-  constructor($scope,$ngRedux) {
+  constructor($ngRedux, $scope) {
     this.statsData = [];
 
-    $ngRedux.connect($scope, state => {
+    let _onChange = (state) => {
       return {
-        statsData: topScorerSelector(state).toJS()
+        statsData: this.getTopScorers(15)(teamFilter(state).toJS())
       };
-    });
+    };
+
+    let disconnect = $ngRedux.connect(_onChange)(this);
+    $scope.$on('$destroy', () => disconnect());
+  }
+
+  getTopScorers(count) {
+    return R.pipe(
+      R.sort((a, b) => b.goals - a.goals),
+      R.take(count)
+    );
   }
 };
 
-TopScorerController.$inject = ['$scope','$ngRedux'];
+TopScorerController.$inject = ['$ngRedux', '$scope'];
